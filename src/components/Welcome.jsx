@@ -35,7 +35,6 @@ const setupTextHover = (container, type) => {
     };
 
     const handleMouseMove = (e) => {
-        console.log("Hovering over the text!");
         letters.forEach((letter) => {
             const { left: l, width: w } = letter.getBoundingClientRect();
             const distance = Math.abs(e.clientX - (l + w / 2));

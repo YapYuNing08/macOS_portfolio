@@ -1,10 +1,13 @@
 import { useRef } from "react";
 import gsap from "gsap"; 
+import useWindowStore from "#store/window.js";
 import { Tooltip } from "react-tooltip";
 import { dockApps } from "#constants";
 import { useGSAP } from "@gsap/react";
 
 const Dock = () => {
+    // 1. ADDED 'windows' to the destructuring list!
+    const { windows, openWindow, closeWindow } = useWindowStore();
     const dockRef = useRef(null);
 
     useGSAP(() => {
@@ -18,7 +21,7 @@ const Dock = () => {
                 const {left: iconLeft, width} = icon.getBoundingClientRect();
                 const center = iconLeft - left + width / 2;
                 const distance = Math.abs(mouseX - center);
-                const intensity = Math.exp(-(distance ** 2) / 2500);
+                const intensity = Math.exp(-(distance ** 2) / 20000); // Or 2500 for a snappier wave!
 
                 gsap.to(icon, {
                     scale: 1 + intensity * 0.25,
@@ -55,8 +58,19 @@ const Dock = () => {
         };
     }, []);
 
-    const toggleApp = (app) => {
+    // 2. Updated to accept 'id' and 'canOpen' directly from the onClick handler
+    const toggleApp = (id, canOpen) => {
+        if (!canOpen) return;
+
+        const window = windows[id];
         
+        if (window && window.isOpen) {
+            closeWindow(id);
+        } else {
+            openWindow(id);
+        }
+
+        console.log(windows);
     }
 
     return (
@@ -72,7 +86,7 @@ const Dock = () => {
                                 data-tooltip-content={name}
                                 data-tooltip-delay-show={150}
                                 disabled={!canOpen}
-                                onClick= {() => toggleApp(id, canOpen)}
+                                onClick={() => toggleApp(id, canOpen)}
                             >
                                 <img 
                                     src={`/images/${icon}`} 
@@ -88,6 +102,6 @@ const Dock = () => {
             </div>
         </section>
     );
-    
 };
+
 export default Dock;
