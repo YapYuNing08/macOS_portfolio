@@ -35,11 +35,10 @@ const setupTextHover = (container, type) => {
     };
 
     const handleMouseMove = (e) => {
-        console.log("Hovering over the text!");
         letters.forEach((letter) => {
             const { left: l, width: w } = letter.getBoundingClientRect();
             const distance = Math.abs(e.clientX - (l + w / 2));
-            const intensity = Math.exp(-(distance ** 2) / 20000);
+            const intensity = Math.exp(-(distance ** 2.5) / 20000);
             animateLetter(letter, min + (max - min) * intensity);
         });
     };
