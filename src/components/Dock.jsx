@@ -21,7 +21,7 @@ const Dock = () => {
                 const {left: iconLeft, width} = icon.getBoundingClientRect();
                 const center = iconLeft - left + width / 2;
                 const distance = Math.abs(mouseX - center);
-                const intensity = Math.exp(-(distance ** 2) / 20000); // Or 2500 for a snappier wave!
+                const intensity = Math.exp(-(distance ** 2.5) / 20000); // Or 2500 for a snappier wave!
 
                 gsap.to(icon, {
                     scale: 1 + intensity * 0.25,
