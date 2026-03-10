@@ -4,6 +4,7 @@ import { Draggable } from "gsap/Draggable";
 import Navbar from "#components/Navbar";
 import Welcome from "#components/Welcome";
 import Dock from "#components/Dock";
+import Home from "#components/Home";
 import Terminal from "#windows/Terminal";
 import Resume from "#windows/Resume";
 import Finder from "#windows/Finder";
@@ -23,6 +24,7 @@ const App = () => {
             <Navbar />
             <Welcome />
             <Dock />
+            <Home />
 
             <Terminal />
             <Resume />
