@@ -24,20 +24,17 @@ const Terminal = () => {
                 </div>
 
                 <ul className="content">
-                    {techStack.map(({ category, items }) => (
-                        <li key = {category} className="flex items-center">
-                            <Check className="check" size={20} />
-                            <div>
-                                <h3>{category}</h3>
-                                <ul>
-                                    {items.map((item, index) => (
-                                        <li key={index}>{item} { index < items.length - 1 ? ',' : '' }</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </li> 
+                    {activeLocation?.children?.map((item) => (
+                        <li 
+                        key={item.id} 
+                        className={item.position}
+                        onClick={() => openItem(item)}
+                        >
+                        <img src={item.icon} alt={item.name} />
+                        <p>{item.name}</p>
+                        </li>
                     ))}
-                </ul>
+                    </ul>
 
                 <div className="footnote">
                     <p>

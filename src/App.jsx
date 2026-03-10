@@ -6,6 +6,7 @@ import Welcome from "#components/Welcome";
 import Dock from "#components/Dock";
 import Terminal from "#windows/Terminal";
 import Resume from "#windows/Resume";
+import Finder from "#windows/Finder";
 
 import useWindowStore from "#store/window";
 
@@ -20,8 +21,9 @@ const App = () => {
             <Welcome />
             <Dock />
 
-            {windows.terminal.isOpen && <Terminal />}
-            {windows.resume.isOpen && <Resume />}
+            <Terminal />
+            <Resume />
+            <Finder />
         </main>
     );
 };
