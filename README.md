@@ -1,16 +1,29 @@
-# React + Vite
+# Yu Ning's macOS Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
+![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logoColor=white)
 
-Currently, two official plugins are available:
+A highly interactive, macOS-inspired personal portfolio website. Built to simulate a real desktop environment, this portfolio features draggable windows, a functional dock, dynamic z-index stacking, and native-feeling applications to showcase my projects, skills, and resume.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+* **Desktop Environment:** Interactive desktop with draggable folder icons that open via double-click.
+* **Draggable Windows:** Smooth, physics-based window dragging powered by GSAP.
+* **Window Management:** Advanced z-index state management ensures the focused window always comes to the front, just like a real OS.
+* **Functional Dock:** Animated macOS-style dock for launching applications.
+* **Custom Applications:**
+  * 📁 **Finder:** Browse through projects, images, and text files with a simulated file system.
+  * 👨‍💻 **Terminal:** A command-line interface that renders my technical skills and stacks.
+  * 📄 **Resume:** An integrated PDF viewer.
+  * 📬 **Contact:** A sleek contact widget featuring social links and a built-in messaging form.
+  * 🖼️ **Preview:** Native-looking image and text file viewers.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack Details
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+* **Framework:** [React.js](https://react.dev/) + [Vite](https://vitejs.dev/) for lightning-fast module replacement and builds.
+* **Styling:** [Tailwind CSS](https://tailwindcss.com/) for pixel-perfect, utility-first styling.
+* **Animations:** [GSAP](https://gsap.com/) (`@gsap/react` and `Draggable`) for physics-based, 60fps window interactions.
+* **State Management:** [Zustand](https://zustand-demo.pmnd.rs/) (with Immer) for managing complex, globally accessible window configurations.
