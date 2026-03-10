@@ -11,21 +11,21 @@ const useWindowStore = create(
             set((state) => {
                 const win = state.windows[windowKey];
                 win.isOpen = true;
-                win.zIndex = state.nextZIndex++;
+                win.hasOpened = true;       // ← mount the inner component
+                win.zIndex = state.nextZIndex++;  // ← bring to front on open
                 win.data = data ?? win.data;
             }),
 
         closeWindow: (windowKey) => set((state) => {
-            const windowConfig = state.windows[windowKey];                
-            if (windowConfig) {
-                windowConfig.isOpen = false;
-                windowConfig.data = null; 
-            }      
+            const win = state.windows[windowKey];
+            win.isOpen = false;
+            // ← don't touch zIndex here, no need to reset it
+            win.data = null; 
         }),
 
         focusWindow: (windowKey) => set((state) => {
             const win = state.windows[windowKey];
-             win.zIndex = state.nextZIndex++;
+            win.zIndex = state.nextZIndex++;
         }),
     })),
 );

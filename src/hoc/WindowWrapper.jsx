@@ -1,5 +1,5 @@
 import useWindowStore from "#store/window.js";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
@@ -7,19 +7,26 @@ import { Draggable } from "gsap/Draggable";
 const WindowWrapper = (Component, windowKey) => {
     const Wrapped = (props) => {
         const { focusWindow, windows } = useWindowStore();
-        const { isOpen, zIndex } = windows[windowKey];
+        const { isOpen, zIndex, hasOpened } = windows[windowKey];
         
         const ref = useRef(null);
         const isFirstRender = useRef(true); 
 
+        // Handle zIndex separately — no GSAP, no Draggable recreation
+        useEffect(() => {
+            const el = ref.current;
+            if (!el) return;
+            el.style.zIndex = zIndex;
+        }, [zIndex]);
+
+        // Handle open/close animation
         useGSAP(() => {
             const el = ref.current;
             if (!el) return;
 
             if (isOpen) {
-                gsap.set(el, { clearProps: "all" });
+                gsap.set(el, { clearProps: "transform,opacity" }); // only clear transform, not zIndex
                 el.style.display = windowKey === "resume" ? "flex" : "block";
-                
                 gsap.fromTo(
                     el, 
                     { scale: 0.8, opacity: 0, y: 40 }, 
@@ -38,13 +45,14 @@ const WindowWrapper = (Component, windowKey) => {
                         ease: "power1.in", 
                         onComplete: () => {
                             el.style.display = "none";
-                            gsap.set(el, { clearProps: "all" });
+                            gsap.set(el, { clearProps: "transform,opacity" });
                         }
                     });
                 }
             }
-        }, [isOpen]);
+        }, [isOpen]); // ← only isOpen, never zIndex
 
+        // Draggable — created once, never recreated
         useGSAP(() => {
             const el = ref.current;
             if (!el) return;
@@ -54,20 +62,16 @@ const WindowWrapper = (Component, windowKey) => {
             });
 
             return () => instance.kill();
-        }, []);
+        }, []); // ← empty deps, created once only
 
         return (
-            <section
-                id={windowKey}
-                ref={ref}
-                style={{
-                    zIndex,
-                    display: isOpen ? (windowKey === "resume" ? "flex" : "block") : "none",
-                    height: "fit-content"
-                }}
+            <section 
+                id={windowKey} 
+                ref={ref} 
+                style={{ zIndex, display: "none", height: "fit-content" }}
                 className="absolute overflow-hidden rounded-xl"
             >
-                <Component {...props} />
+                {hasOpened && <Component {...props} />}
             </section>
         );
     };
