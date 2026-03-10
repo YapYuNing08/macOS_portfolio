@@ -1,3 +1,4 @@
 import Terminal from "#windows/Terminal.jsx";
+import Resume from "#windows/Resume.jsx";
 
-export { Terminal };
+export { Terminal, Resume };

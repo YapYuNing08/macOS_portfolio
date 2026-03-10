@@ -37,7 +37,7 @@ const navIcons = [
 
 const dockApps = [
   {
-    id: "finder",
+    id: "resume",
     name: "Portfolio", // was "Finder"
     icon: "finder.png",
     canOpen: true,

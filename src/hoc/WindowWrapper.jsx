@@ -1,5 +1,5 @@
 import useWindowStore from "#store/window.js";
-import { use, useRef } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Draggable } from "gsap/Draggable";
@@ -8,32 +8,40 @@ const WindowWrapper = (Component, windowKey) => {
     const Wrapped = (props) => {
         const { focusWindow, windows } = useWindowStore();
         const { isOpen, zIndex } = windows[windowKey];
+        
         const ref = useRef(null);
+        const isFirstRender = useRef(true); 
 
         useGSAP(() => {
             const el = ref.current;
             if (!el) return;
 
             if (isOpen) {
-                // ANIMATE IN
-                el.style.display = "block";
+                gsap.set(el, { clearProps: "all" });
+                el.style.display = windowKey === "resume" ? "flex" : "block";
+                
                 gsap.fromTo(
                     el, 
                     { scale: 0.8, opacity: 0, y: 40 }, 
                     { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
                 );
+                isFirstRender.current = false; 
             } else {
-                // ANIMATE OUT
-                gsap.to(el, {
-                    scale: 0.8, 
-                    opacity: 0, 
-                    duration: 0.2, 
-                    ease: "power1.in", 
-                    onComplete: () => {
-                        // Hide it completely only AFTER the animation finishes
-                        el.style.display = "none";
-                    }
-                });
+                if (isFirstRender.current) {
+                    el.style.display = "none";
+                    isFirstRender.current = false;
+                } else {
+                    gsap.to(el, {
+                        scale: 0.8, 
+                        opacity: 0, 
+                        duration: 0.2, 
+                        ease: "power1.in", 
+                        onComplete: () => {
+                            el.style.display = "none";
+                            gsap.set(el, { clearProps: "all" });
+                        }
+                    });
+                }
             }
         }, [isOpen]);
 
@@ -42,18 +50,22 @@ const WindowWrapper = (Component, windowKey) => {
             if (!el) return;
 
             const [instance] = Draggable.create(el, { 
-                onPress: () => focusWindow(windowKey) }
-            );
+                onPress: () => focusWindow(windowKey) 
+            });
 
             return () => instance.kill();
         }, []);
 
         return (
-            <section 
-                id={windowKey} 
-                ref={ref} 
-                style={{ zIndex }}
-                className="absolute"
+            <section
+                id={windowKey}
+                ref={ref}
+                style={{
+                    zIndex,
+                    display: isOpen ? (windowKey === "resume" ? "flex" : "block") : "none",
+                    height: "fit-content"
+                }}
+                className="absolute overflow-hidden rounded-xl"
             >
                 <Component {...props} />
             </section>
