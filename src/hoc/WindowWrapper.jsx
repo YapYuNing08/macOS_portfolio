@@ -12,20 +12,20 @@ const WindowWrapper = (Component, windowKey) => {
         const ref = useRef(null);
         const isFirstRender = useRef(true); 
 
-        // Handle zIndex separately — no GSAP, no Draggable recreation
+        // 1. Handle zIndex
         useEffect(() => {
             const el = ref.current;
             if (!el) return;
             el.style.zIndex = zIndex;
         }, [zIndex]);
 
-        // Handle open/close animation
+        // 2. Handle open/close animation
         useGSAP(() => {
             const el = ref.current;
             if (!el) return;
 
             if (isOpen) {
-                gsap.set(el, { clearProps: "transform,opacity" }); // only clear transform, not zIndex
+                gsap.set(el, { clearProps: "transform,opacity" }); 
                 el.style.display = windowKey === "resume" ? "flex" : "block";
                 gsap.fromTo(
                     el, 
@@ -50,24 +50,31 @@ const WindowWrapper = (Component, windowKey) => {
                     });
                 }
             }
-        }, [isOpen]); // ← only isOpen, never zIndex
+        }, [isOpen]); 
 
-        // Draggable — created once, never recreated
+        // 3. THE TIMING FIX: Handle Draggable
         useGSAP(() => {
             const el = ref.current;
-            if (!el) return;
+            
+            // Wait! Don't run GSAP until the inner component actually exists in the DOM
+            if (!el || !hasOpened) return;
+
+            const header = el.querySelector("#window-header");
 
             const [instance] = Draggable.create(el, { 
-                onPress: () => focusWindow(windowKey) 
+                trigger: header, // Now it successfully finds the header!
             });
 
             return () => instance.kill();
-        }, []); // ← empty deps, created once only
+            
+        // We added hasOpened here so it triggers at the exact right millisecond!
+        }, [hasOpened]); 
 
         return (
             <section 
                 id={windowKey} 
                 ref={ref} 
+                onPointerDown={() => focusWindow(windowKey)}
                 style={{ zIndex, display: "none", height: "fit-content" }}
                 className="absolute overflow-hidden rounded-xl"
             >
