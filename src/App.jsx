@@ -8,6 +8,7 @@ import Terminal from "#windows/Terminal";
 import Resume from "#windows/Resume";
 import Finder from "#windows/Finder";
 import Text from "#windows/Text";
+import Image from "#windows/Image";
 
 import useWindowStore from "#store/window";
 
@@ -26,6 +27,7 @@ const App = () => {
             <Resume />
             <Finder />
             <Text />
+            <Image />
         </main>
     );
 };
