@@ -6,7 +6,7 @@
 ![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
 ![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logoColor=white)
 
-A highly interactive, macOS-inspired personal portfolio website. Built to simulate a real desktop environment, this portfolio features draggable windows, a functional dock, dynamic z-index stacking, and native-feeling applications to showcase my projects, skills, and resume.
+A macOS-inspired personal portfolio website. Built to simulate a real desktop environment, this portfolio is used to showcase my projects, skills, and resume.
 
 ## ✨ Features
 
