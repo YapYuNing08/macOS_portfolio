@@ -353,7 +353,8 @@ body {
   }
 
   #txtfile {
-    @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    /* Removed w-md so the React component can control its own size! */
+    @apply absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden flex flex-col;
 
     h2 {
       @apply font-bold text-sm text-center w-full;
