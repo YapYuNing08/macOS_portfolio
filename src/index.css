@@ -67,7 +67,8 @@ body {
   }
 
   #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
+    @apply text-gray-200 flex flex-col justify-center items-center absolute 
+    top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0;
 
     .small-screen {
       @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
@@ -297,7 +298,8 @@ body {
   }
 
   #resume {
-    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+    /* Changed position to top-20 left-20 so it stays on the screen! */
+    @apply absolute top-20 left-20 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden w-[800px] h-[80vh] flex flex-col;
 
     #window-header {
       h2 {
